@@ -1,0 +1,26 @@
+.env
+.env.*
+!.env.example
+
+node_modules/
+.pnpm-store/
+
+dist/
+coverage/
+output/
+data/
+**/recovery_file_*.dat
+
+# MikroORM names a snapshot after its database; per-workstream databases
+# (sportsarc_<name>) leave one of these behind. Only main's is tracked.
+api/migrations/.snapshot-sportsarc_*.json
+
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+contracts/build/
+
+.DS_Store
+*.log
+.idea/
+.vscode/

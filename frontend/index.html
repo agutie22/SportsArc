@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#08090B">
+  <title>SportsArc</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script>
+    // Dark-first; a saved choice wins. Runs before CSS so there is no flash.
+    try { if (localStorage.getItem("sportsarc_theme") === "light") document.documentElement.dataset.theme = "light"; } catch {}
+  </script>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ── AUTH SCREEN (full-page, shown when not signed in) ────── -->
+  <div id="auth-screen" class="auth-screen">
+    <div class="auth-container">
+      <div class="auth-logo">
+        <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c3-9 13-12 16-12"/><path d="M15 3l5 3-3 5"/></svg></span>
+        <span class="logo-text">Sports<span class="logo-accent">Arc</span></span>
+      </div>
+      <p class="auth-subtitle">Find a game near you, show up, and build a record anyone can check. The one coaches and scouts can trust.</p>
+      <div id="auth-body"></div>
+      <div class="auth-explore" id="auth-explore">
+        <span class="auth-explore-label">No account needed</span>
+        <a class="auth-explore-link" href="#/map">Explore where people play</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN WRAPPER ─────────────────────────────────────────── -->
+  <div class="app-main">
+    <header class="topbar">
+
+      <a class="topbar-logo" href="#/" aria-label="SportsArc home">
+        <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c3-9 13-12 16-12"/><path d="M15 3l5 3-3 5"/></svg></span>
+        <span class="logo-text">Sports<span class="logo-accent">Arc</span></span>
+      </a>
+
+      <nav class="topbar-tabs" id="topbar-tabs" aria-label="Sections"></nav>
+
+      <div class="topbar-right">
+        <button class="wallet-chip" id="wallet-chip" title="Wallet balance">
+          <span class="wallet-chip-dot"></span>
+          <span id="wallet-chip-amount" data-wallet-balance>—</span>
+        </button>
+        <button class="account-btn" id="account-btn" aria-expanded="false" aria-label="Account">
+          <span class="avatar avatar-xs" data-role="">··</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Account menu: a popover on desktop, a left drawer on phones -->
+    <div class="popper-scrim" id="popper-scrim" hidden></div>
+    <div class="popper" id="account-popper" role="dialog" aria-label="Account" hidden></div>
+
+    <main id="main-content" class="main-content"></main>
+
+    <!-- Phone navigation; rendered from the same tab list as the header -->
+    <nav class="bottom-nav" id="bottom-nav" aria-label="Sections"></nav>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

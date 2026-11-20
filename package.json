@@ -1,0 +1,46 @@
+{
+  "name": "sportsarc",
+  "version": "0.1.0",
+  "description": "SportsArc \u2014 pickup games, leagues, and sports community accounts",
+  "scripts": {
+    "dev": "pnpm run dev:api",
+    "dev:api": "node --watch --env-file=.env --import=tsx api/server.ts",
+    "typecheck": "tsc --noEmit",
+    "check:frontend": "node scripts/check-frontend.mjs",
+    "verify": "pnpm typecheck && pnpm check:frontend",
+    "build": "pnpm verify",
+    "test": "node --import=tsx --test \"api/**/*.test.ts\"",
+    "check:vectors": "node --import=tsx api/web3/events/check.ts",
+    "db:up": "docker compose up -d postgres",
+    "migration:up": "node --env-file=.env --import=tsx node_modules/@mikro-orm/cli/cli.js migration:up --config ./mikro-orm.config.ts",
+    "migration:create": "node --env-file=.env --import=tsx node_modules/@mikro-orm/cli/cli.js migration:create --config ./mikro-orm.config.ts",
+    "contracts": "bash scripts/contracts.sh",
+    "build:w3s": "esbuild node_modules/@circle-fin/w3s-pw-web-sdk/dist/src/index.js --bundle --format=esm --platform=browser --legal-comments=external --outfile=frontend/vendor/w3s-pw-web-sdk.bundle.mjs --alias:stream=stream-browserify --alias:crypto=crypto-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --inject:./frontend/vendor/esbuild-w3s-browser-shim.js --define:global=globalThis"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@circle-fin/user-controlled-wallets": "^10.3.0",
+    "@circle-fin/w3s-pw-web-sdk": "^1.1.11",
+    "@mikro-orm/core": "^6.6.9",
+    "@mikro-orm/migrations": "^6.6.9",
+    "@mikro-orm/postgresql": "^6.6.9",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
+    "events": "^3.3.0",
+    "process": "^0.11.10",
+    "reflect-metadata": "^0.2.2",
+    "stream-browserify": "^3.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "util": "^0.12.5",
+    "viem": "^2.48.0"
+  },
+  "devDependencies": {
+    "@mikro-orm/cli": "^6.6.9",
+    "@types/node": "^25.6.0",
+    "esbuild": "^0.28.0"
+  }
+}

@@ -1,0 +1,1138 @@
+{
+ "data": [
+  {
+   "id": "454067",
+   "title": "Orlando vs Boston",
+   "slug": "orlando-vs-boston",
+   "type": "categorical",
+   "category": "Sports",
+   "ticker": "NBA-2611170000-ORL-BOS-M",
+   "status": "active",
+   "createdAt": "2026-11-13T00:02:15.711Z",
+   "contracts": [
+    {
+     "id": "454067-1117724",
+     "label": "Boston",
+     "prices": {
+      "buy": {
+       "yes": "0.76",
+       "no": "0.25"
+      },
+      "sell": {
+       "yes": "0.75",
+       "no": "0.24"
+      },
+      "bestBid": "0.75",
+      "bestAsk": "0.76",
+      "lastTradePrice": "0.76"
+     },
+     "status": "active",
+     "createdAt": "2026-11-13T00:02:15.711Z",
+     "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Win_Lose_Class_925aa13e-b255-4ef8-85e0-534a6f0a9012.pdf",
+     "ticker": "BOS",
+     "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-M-BOS",
+     "marketState": "open",
+     "abbreviatedName": "BOS",
+     "expiryDate": "2026-11-18T12:00:00.000Z",
+     "effectiveDate": "2026-11-13T00:00:04.000Z",
+     "sortOrder": 2,
+     "sportsSide": "home",
+     "isCombo": false,
+     "quantityIncrement": "0.01",
+     "quantityMinimum": "0.01",
+     "priceIncrement": "0.01",
+     "quoteAssetPrecision": 2,
+     "priceMinimum": "0.01",
+     "target": {
+      "type": "team",
+      "name": "Boston Celtics",
+      "externalIds": {
+       "sportradar": "583eccfa-fb46-11e1-82cb-f4ce4684ea4c"
+      }
+     }
+    },
+    {
+     "id": "454067-1117706",
+     "label": "Orlando",
+     "prices": {
+      "buy": {
+       "yes": "0.25",
+       "no": "0.76"
+      },
+      "sell": {
+       "yes": "0.24",
+       "no": "0.75"
+      },
+      "bestBid": "0.24",
+      "bestAsk": "0.25",
+      "lastTradePrice": "0.26"
+     },
+     "status": "active",
+     "createdAt": "2026-11-13T00:02:15.711Z",
+     "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Win_Lose_Class_925aa13e-b255-4ef8-85e0-534a6f0a9012.pdf",
+     "ticker": "ORL",
+     "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-M-ORL",
+     "marketState": "open",
+     "abbreviatedName": "ORL",
+     "expiryDate": "2026-11-18T12:00:00.000Z",
+     "effectiveDate": "2026-11-13T00:00:04.000Z",
+     "sortOrder": 1,
+     "sportsSide": "away",
+     "isCombo": false,
+     "quantityIncrement": "0.01",
+     "quantityMinimum": "0.01",
+     "priceIncrement": "0.01",
+     "quoteAssetPrecision": 2,
+     "priceMinimum": "0.01",
+     "target": {
+      "type": "team",
+      "name": "Orlando Magic",
+      "externalIds": {
+       "sportradar": "583ed157-fb46-11e1-82cb-f4ce4684ea4c"
+      }
+     }
+    }
+   ],
+   "effectiveDate": "2026-11-13T00:02:15.711Z",
+   "isLive": true,
+   "participants": [
+    {
+     "id": "459",
+     "name": "Boston Celtics",
+     "abbreviation": "BOS",
+     "side": "home"
+    },
+    {
+     "id": "469",
+     "name": "Orlando Magic",
+     "abbreviation": "ORL",
+     "side": "away"
+    }
+   ],
+   "volume": "778.05",
+   "volume24h": "617.67",
+   "tags": [
+    "Pro Basketball"
+   ],
+   "expiryDate": "2026-11-18T12:00:00.000Z",
+   "startTime": "2026-11-17T00:00:00.000Z",
+   "termsLink": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Win_Lose_Class_925aa13e-b255-4ef8-85e0-534a6f0a9012.pdf",
+   "subcategory": {
+    "id": 14,
+    "slug": "sports_pro-basketball",
+    "name": "Pro Basketball",
+    "path": [
+     "Sports",
+     "Pro Basketball"
+    ]
+   },
+   "events": [
+    {
+     "id": "468706",
+     "title": "Orlando vs Boston: Point Spread",
+     "slug": "orlando-vs-boston-point-spread",
+     "type": "categorical",
+     "category": "Sports",
+     "ticker": "NBA-2611170000-ORL-BOS-S",
+     "status": "active",
+     "createdAt": "2026-11-16T01:46:47.682Z",
+     "contracts": [
+      {
+       "id": "468706-1170313",
+       "label": "Boston wins by more than 1.5 points",
+       "prices": {
+        "buy": {
+         "yes": "0.75",
+         "no": "0.28"
+        },
+        "sell": {
+         "yes": "0.72",
+         "no": "0.25"
+        },
+        "bestBid": "0.72",
+        "bestAsk": "0.75"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:46:47.682Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Spread_Class_98459f6c-7941-4c33-9bc5-7202c53df230.pdf",
+       "ticker": "BOS1",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-S-BOS1",
+       "marketState": "open",
+       "abbreviatedName": "Boston",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 11,
+       "strike": {
+        "type": "spread",
+        "value": "1.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468706-1170321",
+       "label": "Boston wins by more than 2.5 points",
+       "prices": {
+        "buy": {
+         "yes": "0.72",
+         "no": "0.31"
+        },
+        "sell": {
+         "yes": "0.69",
+         "no": "0.28"
+        },
+        "bestBid": "0.69",
+        "bestAsk": "0.72"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:46:47.682Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Spread_Class_98459f6c-7941-4c33-9bc5-7202c53df230.pdf",
+       "ticker": "BOS2",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-S-BOS2",
+       "marketState": "open",
+       "abbreviatedName": "Boston",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 18,
+       "strike": {
+        "type": "spread",
+        "value": "2.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468706-1170329",
+       "label": "Boston wins by more than 4.5 points",
+       "prices": {
+        "buy": {
+         "yes": "0.65",
+         "no": "0.37"
+        },
+        "sell": {
+         "yes": "0.63",
+         "no": "0.35"
+        },
+        "bestBid": "0.63",
+        "bestAsk": "0.65"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:46:47.682Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Spread_Class_98459f6c-7941-4c33-9bc5-7202c53df230.pdf",
+       "ticker": "BOS4",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-S-BOS4",
+       "marketState": "open",
+       "abbreviatedName": "Boston",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 25,
+       "strike": {
+        "type": "spread",
+        "value": "4.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468706-1170330",
+       "label": "Boston wins by more than 5.5 points",
+       "prices": {
+        "buy": {
+         "yes": "0.62",
+         "no": "0.41"
+        },
+        "sell": {
+         "yes": "0.59",
+         "no": "0.38"
+        },
+        "bestBid": "0.59",
+        "bestAsk": "0.62"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:46:47.682Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Spread_Class_98459f6c-7941-4c33-9bc5-7202c53df230.pdf",
+       "ticker": "BOS5",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-S-BOS5",
+       "marketState": "open",
+       "abbreviatedName": "Boston",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 26,
+       "strike": {
+        "type": "spread",
+        "value": "5.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468706-1170334",
+       "label": "Boston wins by more than 6.5 points",
+       "prices": {
+        "buy": {
+         "yes": "0.58",
+         "no": "0.44"
+        },
+        "sell": {
+         "yes": "0.56",
+         "no": "0.42"
+        },
+        "bestBid": "0.56",
+        "bestAsk": "0.58"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:46:47.682Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Spread_Class_98459f6c-7941-4c33-9bc5-7202c53df230.pdf",
+       "ticker": "BOS6",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-S-BOS6",
+       "marketState": "open",
+       "abbreviatedName": "Boston",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 30,
+       "strike": {
+        "type": "spread",
+        "value": "6.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468706-1170333",
+       "label": "Boston wins by more than 7.5 points",
+       "prices": {
+        "buy": {
+         "yes": "0.54",
+         "no": "0.47"
+        },
+        "sell": {
+         "yes": "0.53",
+         "no": "0.46"
+        },
+        "bestBid": "0.53",
+        "bestAsk": "0.54"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:46:47.682Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Spread_Class_98459f6c-7941-4c33-9bc5-7202c53df230.pdf",
+       "ticker": "BOS7",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-S-BOS7",
+       "marketState": "open",
+       "abbreviatedName": "Boston",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 29,
+       "strike": {
+        "type": "spread",
+        "value": "7.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      }
+     ],
+     "effectiveDate": "2026-11-16T01:46:47.682Z",
+     "isLive": true,
+     "participants": [
+      {
+       "id": "459",
+       "name": "Boston Celtics",
+       "abbreviation": "BOS",
+       "side": "home"
+      },
+      {
+       "id": "469",
+       "name": "Orlando Magic",
+       "abbreviation": "ORL",
+       "side": "away"
+      }
+     ],
+     "tags": [
+      "Pro Basketball"
+     ],
+     "expiryDate": "2026-11-18T12:00:00.000Z",
+     "startTime": "2026-11-17T00:00:00.000Z",
+     "termsLink": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Spread_Class_98459f6c-7941-4c33-9bc5-7202c53df230.pdf",
+     "subcategory": {
+      "id": 14,
+      "slug": "sports_pro-basketball",
+      "name": "Pro Basketball",
+      "path": [
+       "Sports",
+       "Pro Basketball"
+      ]
+     },
+     "template": "sports-spread",
+     "gameId": "42447d33-fcf6-4d1d-8dcf-b5e9bf15d9fa",
+     "sourceDetails": {
+      "agency": "statscore-rest-api",
+      "index": "Basketball"
+     },
+     "sportsMarket": {
+      "sport": "basketball",
+      "type": "spread",
+      "subject": "team",
+      "scope": {
+       "type": "full_contest"
+      },
+      "metric": "points"
+     }
+    },
+    {
+     "id": "468711",
+     "title": "Orlando vs Boston: Total Points",
+     "slug": "orlando-vs-boston-total-points",
+     "type": "categorical",
+     "category": "Sports",
+     "ticker": "NBA-2611170000-ORL-BOS-T",
+     "status": "active",
+     "createdAt": "2026-11-16T01:48:41.784Z",
+     "contracts": [
+      {
+       "id": "468711-1170337",
+       "label": "More than 183.5 points scored",
+       "prices": {
+        "buy": {
+         "yes": "0.99",
+         "no": "0.05"
+        },
+        "sell": {
+         "yes": "0.95",
+         "no": "0.01"
+        },
+        "bestBid": "0.95",
+        "bestAsk": "0.99"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:48:41.784Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Point_Total_Class_83dd60df-d1ae-434e-8083-776a0713244a.pdf",
+       "ticker": "O183",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-T-O183",
+       "marketState": "open",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 0,
+       "strike": {
+        "type": "over",
+        "value": "183.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468711-1170338",
+       "label": "More than 185.5 points scored",
+       "prices": {
+        "buy": {
+         "yes": "0.97",
+         "no": "0.07"
+        },
+        "sell": {
+         "yes": "0.93",
+         "no": "0.03"
+        },
+        "bestBid": "0.93",
+        "bestAsk": "0.97"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:48:41.784Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Point_Total_Class_83dd60df-d1ae-434e-8083-776a0713244a.pdf",
+       "ticker": "O185",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-T-O185",
+       "marketState": "open",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 1,
+       "strike": {
+        "type": "over",
+        "value": "185.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468711-1170339",
+       "label": "More than 187.5 points scored",
+       "prices": {
+        "buy": {
+         "yes": "0.95",
+         "no": "0.09"
+        },
+        "sell": {
+         "yes": "0.91",
+         "no": "0.05"
+        },
+        "bestBid": "0.91",
+        "bestAsk": "0.95"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:48:41.784Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Point_Total_Class_83dd60df-d1ae-434e-8083-776a0713244a.pdf",
+       "ticker": "O187",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-T-O187",
+       "marketState": "open",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 2,
+       "strike": {
+        "type": "over",
+        "value": "187.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468711-1170340",
+       "label": "More than 189.5 points scored",
+       "prices": {
+        "buy": {
+         "yes": "0.93",
+         "no": "0.11"
+        },
+        "sell": {
+         "yes": "0.89",
+         "no": "0.07"
+        },
+        "bestBid": "0.89",
+        "bestAsk": "0.93"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:48:41.784Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Point_Total_Class_83dd60df-d1ae-434e-8083-776a0713244a.pdf",
+       "ticker": "O189",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-T-O189",
+       "marketState": "open",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 3,
+       "strike": {
+        "type": "over",
+        "value": "189.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468711-1170341",
+       "label": "More than 191.5 points scored",
+       "prices": {
+        "buy": {
+         "yes": "0.91",
+         "no": "0.13"
+        },
+        "sell": {
+         "yes": "0.87",
+         "no": "0.09"
+        },
+        "bestBid": "0.87",
+        "bestAsk": "0.91"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:48:41.784Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Point_Total_Class_83dd60df-d1ae-434e-8083-776a0713244a.pdf",
+       "ticker": "O191",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-T-O191",
+       "marketState": "open",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 4,
+       "strike": {
+        "type": "over",
+        "value": "191.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      },
+      {
+       "id": "468711-1170342",
+       "label": "More than 193.5 points scored",
+       "prices": {
+        "buy": {
+         "yes": "0.89",
+         "no": "0.15"
+        },
+        "sell": {
+         "yes": "0.85",
+         "no": "0.11"
+        },
+        "bestBid": "0.85",
+        "bestAsk": "0.89"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T01:48:41.784Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Point_Total_Class_83dd60df-d1ae-434e-8083-776a0713244a.pdf",
+       "ticker": "O193",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-T-O193",
+       "marketState": "open",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 5,
+       "strike": {
+        "type": "over",
+        "value": "193.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01"
+      }
+     ],
+     "effectiveDate": "2026-11-16T01:48:41.784Z",
+     "isLive": true,
+     "participants": [
+      {
+       "id": "459",
+       "name": "Boston Celtics",
+       "abbreviation": "BOS",
+       "side": "home"
+      },
+      {
+       "id": "469",
+       "name": "Orlando Magic",
+       "abbreviation": "ORL",
+       "side": "away"
+      }
+     ],
+     "tags": [
+      "Pro Basketball"
+     ],
+     "expiryDate": "2026-11-18T12:00:00.000Z",
+     "startTime": "2026-11-17T00:00:00.000Z",
+     "termsLink": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Point_Total_Class_83dd60df-d1ae-434e-8083-776a0713244a.pdf",
+     "subcategory": {
+      "id": 14,
+      "slug": "sports_pro-basketball",
+      "name": "Pro Basketball",
+      "path": [
+       "Sports",
+       "Pro Basketball"
+      ]
+     },
+     "template": "sports-total",
+     "gameId": "42447d33-fcf6-4d1d-8dcf-b5e9bf15d9fa",
+     "sourceDetails": {
+      "agency": "statscore-rest-api",
+      "index": "Basketball"
+     },
+     "sportsMarket": {
+      "sport": "basketball",
+      "type": "total",
+      "subject": "contest",
+      "scope": {
+       "type": "full_contest"
+      },
+      "metric": "points"
+     }
+    },
+    {
+     "id": "469335",
+     "title": "Orlando vs Boston: Player Points",
+     "slug": "orlando-vs-boston-player-points",
+     "type": "categorical",
+     "category": "Sports",
+     "ticker": "NBA-2611170000-ORL-BOS-PPPTS",
+     "status": "active",
+     "createdAt": "2026-11-16T05:07:31.566Z",
+     "contracts": [
+      {
+       "id": "469335-1172106",
+       "label": "Desmond Bane 10+ Points",
+       "prices": {
+        "buy": {
+         "yes": "0.88",
+         "no": "0.15"
+        },
+        "sell": {
+         "yes": "0.85",
+         "no": "0.12"
+        },
+        "bestBid": "0.85",
+        "bestAsk": "0.88"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T05:07:31.566Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Player_Points_Class_0d6c1b1d-d3d2-4e96-82a6-fc089dc8416e.pdf",
+       "ticker": "BANEO9",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-PPPTS-BANEO9",
+       "marketState": "post_only",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 3,
+       "strike": {
+        "type": "over",
+        "value": "9.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01",
+       "target": {
+        "type": "player",
+        "name": "Desmond Bane",
+        "externalIds": {
+         "sportradar": "49962b13-0afc-43f5-a3e2-7e37b7736260"
+        }
+       }
+      },
+      {
+       "id": "469335-1172102",
+       "label": "Derrick White 10+ Points",
+       "prices": {
+        "buy": {},
+        "sell": {}
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T05:07:31.566Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Player_Points_Class_0d6c1b1d-d3d2-4e96-82a6-fc089dc8416e.pdf",
+       "ticker": "DWHITEO9",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-PPPTS-DWHITEO9",
+       "marketState": "post_only",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 0,
+       "strike": {
+        "type": "over",
+        "value": "9.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01",
+       "target": {
+        "type": "player",
+        "name": "Derrick White",
+        "externalIds": {
+         "sportradar": "9bcd5cff-4a1c-4454-89b6-a5899b0c6bcc"
+        }
+       }
+      }
+     ],
+     "effectiveDate": "2026-11-16T05:07:31.566Z",
+     "isLive": true,
+     "participants": [
+      {
+       "id": "459",
+       "name": "Boston Celtics",
+       "abbreviation": "BOS",
+       "side": "home"
+      },
+      {
+       "id": "469",
+       "name": "Orlando Magic",
+       "abbreviation": "ORL",
+       "side": "away"
+      }
+     ],
+     "tags": [
+      "Pro Basketball"
+     ],
+     "expiryDate": "2026-11-18T12:00:00.000Z",
+     "startTime": "2026-11-17T00:00:00.000Z",
+     "termsLink": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Player_Points_Class_0d6c1b1d-d3d2-4e96-82a6-fc089dc8416e.pdf",
+     "subcategory": {
+      "id": 14,
+      "slug": "sports_pro-basketball",
+      "name": "Pro Basketball",
+      "path": [
+       "Sports",
+       "Pro Basketball"
+      ]
+     },
+     "template": "sports-player-props",
+     "gameId": "42447d33-fcf6-4d1d-8dcf-b5e9bf15d9fa",
+     "sourceDetails": {
+      "agency": "statscore-rest-api",
+      "index": "Basketball Player Props"
+     },
+     "sportsMarket": {
+      "sport": "basketball",
+      "type": "prop",
+      "subject": "player",
+      "scope": {
+       "type": "full_contest"
+      },
+      "metric": "points",
+      "team": {
+       "symbol": "BOS",
+       "name": "Boston Celtics",
+       "externalIds": {
+        "sportradarId": "583eccfa-fb46-11e1-82cb-f4ce4684ea4c"
+       }
+      },
+      "player": {
+       "symbol": "PG13",
+       "name": "Paul George",
+       "externalIds": {
+        "sportradarId": "db09f372-9a17-4889-add7-bf8a75ab6da6"
+       }
+      }
+     }
+    },
+    {
+     "id": "469338",
+     "title": "Orlando vs Boston: Player Rebounds",
+     "slug": "orlando-vs-boston-player-rebounds",
+     "type": "categorical",
+     "category": "Sports",
+     "ticker": "NBA-2611170000-ORL-BOS-PPREB",
+     "status": "active",
+     "createdAt": "2026-11-16T05:08:57.953Z",
+     "contracts": [
+      {
+       "id": "469338-1172146",
+       "label": "Jayson Tatum 4+ Rebounds",
+       "prices": {
+        "buy": {
+         "yes": "0.92",
+         "no": "0.12"
+        },
+        "sell": {
+         "yes": "0.88",
+         "no": "0.08"
+        },
+        "bestBid": "0.88",
+        "bestAsk": "0.92"
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T05:08:57.953Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Player_Rebounds_Class_a0f4b7f3-a3ce-40ca-b051-8b0cbcfa8ffa.pdf",
+       "ticker": "TATUMO3",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-PPREB-TATUMO3",
+       "marketState": "post_only",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 15,
+       "strike": {
+        "type": "over",
+        "value": "3.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01",
+       "target": {
+        "type": "player",
+        "name": "Jayson Tatum",
+        "externalIds": {
+         "sportradar": "98136da3-452f-49dc-a794-1ee9c76443f2"
+        }
+       }
+      },
+      {
+       "id": "469338-1172129",
+       "label": "Derrick White 2+ Rebounds",
+       "prices": {
+        "buy": {},
+        "sell": {}
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T05:08:57.953Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Player_Rebounds_Class_a0f4b7f3-a3ce-40ca-b051-8b0cbcfa8ffa.pdf",
+       "ticker": "DWHITEO1",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-PPREB-DWHITEO1",
+       "marketState": "post_only",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 0,
+       "strike": {
+        "type": "over",
+        "value": "1.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01",
+       "target": {
+        "type": "player",
+        "name": "Derrick White",
+        "externalIds": {
+         "sportradar": "9bcd5cff-4a1c-4454-89b6-a5899b0c6bcc"
+        }
+       }
+      }
+     ],
+     "effectiveDate": "2026-11-16T05:08:57.953Z",
+     "isLive": true,
+     "participants": [
+      {
+       "id": "459",
+       "name": "Boston Celtics",
+       "abbreviation": "BOS",
+       "side": "home"
+      },
+      {
+       "id": "469",
+       "name": "Orlando Magic",
+       "abbreviation": "ORL",
+       "side": "away"
+      }
+     ],
+     "tags": [
+      "Pro Basketball"
+     ],
+     "expiryDate": "2026-11-18T12:00:00.000Z",
+     "startTime": "2026-11-17T00:00:00.000Z",
+     "termsLink": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Player_Rebounds_Class_a0f4b7f3-a3ce-40ca-b051-8b0cbcfa8ffa.pdf",
+     "subcategory": {
+      "id": 14,
+      "slug": "sports_pro-basketball",
+      "name": "Pro Basketball",
+      "path": [
+       "Sports",
+       "Pro Basketball"
+      ]
+     },
+     "template": "sports-player-props",
+     "gameId": "42447d33-fcf6-4d1d-8dcf-b5e9bf15d9fa",
+     "sourceDetails": {
+      "agency": "sportradar-rest-api",
+      "index": "Basketball Player Props"
+     },
+     "sportsMarket": {
+      "sport": "basketball",
+      "type": "prop",
+      "subject": "player",
+      "scope": {
+       "type": "full_contest"
+      },
+      "metric": "rebounds",
+      "team": {
+       "symbol": "BOS",
+       "name": "Boston Celtics",
+       "externalIds": {
+        "sportradarId": "583eccfa-fb46-11e1-82cb-f4ce4684ea4c"
+       }
+      },
+      "player": {
+       "symbol": "DWHITE",
+       "name": "Derrick White",
+       "externalIds": {
+        "sportradarId": "9bcd5cff-4a1c-4454-89b6-a5899b0c6bcc"
+       }
+      }
+     }
+    },
+    {
+     "id": "469344",
+     "title": "Orlando vs Boston: Player Assists",
+     "slug": "orlando-vs-boston-player-assists",
+     "type": "categorical",
+     "category": "Sports",
+     "ticker": "NBA-2611170000-ORL-BOS-PPAST",
+     "status": "active",
+     "createdAt": "2026-11-16T05:10:34.966Z",
+     "contracts": [
+      {
+       "id": "469344-1172162",
+       "label": "Derrick White 2+ Assists",
+       "prices": {
+        "buy": {},
+        "sell": {}
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T05:10:34.966Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Player_Assists_Class_76239ffa-aa99-438c-8704-db71de2d2363.pdf",
+       "ticker": "DWHITEO1",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-PPAST-DWHITEO1",
+       "marketState": "post_only",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 0,
+       "strike": {
+        "type": "over",
+        "value": "1.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01",
+       "target": {
+        "type": "player",
+        "name": "Derrick White",
+        "externalIds": {
+         "sportradar": "9bcd5cff-4a1c-4454-89b6-a5899b0c6bcc"
+        }
+       }
+      },
+      {
+       "id": "469344-1172163",
+       "label": "Derrick White 4+ Assists",
+       "prices": {
+        "buy": {},
+        "sell": {}
+       },
+       "status": "active",
+       "createdAt": "2026-11-16T05:10:34.966Z",
+       "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Player_Assists_Class_76239ffa-aa99-438c-8704-db71de2d2363.pdf",
+       "ticker": "DWHITEO3",
+       "instrumentSymbol": "GEMI-NBA-2611170000-ORL-BOS-PPAST-DWHITEO3",
+       "marketState": "post_only",
+       "expiryDate": "2026-11-18T12:00:00.000Z",
+       "effectiveDate": "2026-11-13T00:00:04.000Z",
+       "sortOrder": 1,
+       "strike": {
+        "type": "over",
+        "value": "3.5"
+       },
+       "isCombo": false,
+       "quantityIncrement": "0.01",
+       "quantityMinimum": "0.01",
+       "priceIncrement": "0.01",
+       "quoteAssetPrecision": 2,
+       "priceMinimum": "0.01",
+       "target": {
+        "type": "player",
+        "name": "Derrick White",
+        "externalIds": {
+         "sportradar": "9bcd5cff-4a1c-4454-89b6-a5899b0c6bcc"
+        }
+       }
+      }
+     ],
+     "effectiveDate": "2026-11-16T05:10:34.966Z",
+     "isLive": true,
+     "participants": [
+      {
+       "id": "459",
+       "name": "Boston Celtics",
+       "abbreviation": "BOS",
+       "side": "home"
+      },
+      {
+       "id": "469",
+       "name": "Orlando Magic",
+       "abbreviation": "ORL",
+       "side": "away"
+      }
+     ],
+     "tags": [
+      "Pro Basketball"
+     ],
+     "expiryDate": "2026-11-18T12:00:00.000Z",
+     "startTime": "2026-11-17T00:00:00.000Z",
+     "termsLink": "https://assets.gemini.com/predictions/terms_and_conditions/Terms_and_Conditions_NBA_Player_Assists_Class_76239ffa-aa99-438c-8704-db71de2d2363.pdf",
+     "subcategory": {
+      "id": 14,
+      "slug": "sports_pro-basketball",
+      "name": "Pro Basketball",
+      "path": [
+       "Sports",
+       "Pro Basketball"
+      ]
+     },
+     "template": "sports-player-props",
+     "gameId": "42447d33-fcf6-4d1d-8dcf-b5e9bf15d9fa",
+     "sourceDetails": {
+      "agency": "sportradar-rest-api",
+      "index": "Basketball Player Props"
+     },
+     "sportsMarket": {
+      "sport": "basketball",
+      "type": "prop",
+      "subject": "player",
+      "scope": {
+       "type": "full_contest"
+      },
+      "metric": "assists",
+      "team": {
+       "symbol": "BOS",
+       "name": "Boston Celtics",
+       "externalIds": {
+        "sportradarId": "583eccfa-fb46-11e1-82cb-f4ce4684ea4c"
+       }
+      },
+      "player": {
+       "symbol": "TATUM",
+       "name": "Jayson Tatum",
+       "externalIds": {
+        "sportradarId": "98136da3-452f-49dc-a794-1ee9c76443f2"
+       }
+      }
+     }
+    }
+   ],
+   "template": "sports-game",
+   "gameId": "42447d33-fcf6-4d1d-8dcf-b5e9bf15d9fa",
+   "sourceDetails": {
+    "agency": "statscore-rest-api",
+    "index": "Basketball"
+   },
+   "volumeDelta24hPct": "464.65",
+   "sportsMarket": {
+    "sport": "basketball",
+    "type": "moneyline",
+    "subject": "contest",
+    "scope": {
+     "type": "full_contest"
+    },
+    "team": {
+     "symbol": "ORL",
+     "name": "Orlando Magic",
+     "externalIds": {
+      "sportradarId": "583ed157-fb46-11e1-82cb-f4ce4684ea4c"
+     }
+    }
+   }
+  }
+ ],
+ "pagination": {
+  "limit": 100,
+  "offset": 0,
+  "total": 1
+ }
+}

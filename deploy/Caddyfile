@@ -1,0 +1,92 @@
+# SportsArc edge: TLS, load balancing over the app containers, request IDs,
+# compression, security headers, JSON access logs.
+#
+# Set from .env (through compose):
+#   SITE_ADDRESS          ":80" on a laptop (plain http, published on 8080),
+#                         the bare domain on the VPS (automatic Let's Encrypt),
+#                         or "localhost" with CADDY_GLOBAL_OPTIONS=local_certs
+#                         to test HTTPS with Caddy's internal CA.
+#   CADDY_GLOBAL_OPTIONS  extra global options, e.g. "email you@example.com".
+#   APP_UPSTREAMS         "app1:3000 app2:3000" (add app3:3000 to scale out).
+#   HEALTH_PATH           active health check path: /health/ready (503 while the
+#                         app is draining or its database is down).
+{
+	{$CADDY_GLOBAL_OPTIONS}
+	admin localhost:2019
+	# In-flight requests get 10s to finish on reload or stop.
+	grace_period 10s
+	# Request counts and latency per status code, for Prometheus.
+	metrics
+	servers {
+		# The tunnel (cloudflared) and Docker's own proxy sit on private
+		# ranges; only from those is a forwarded client address believed.
+		# Internet clients reach Caddy directly and cannot spoof it.
+		trusted_proxies static private_ranges
+		client_ip_headers Cf-Connecting-Ip X-Forwarded-For
+	}
+}
+
+# Prometheus metrics for Alloy, on the internal network only (not published).
+:9180 {
+	metrics /metrics
+}
+
+{$SITE_ADDRESS} {
+	log {
+		output stdout
+		format json
+	}
+
+	# One ID per request, generated here (never trusted from the client),
+	# sent to the app (which logs it as reqId and echoes it), returned to the
+	# browser, and written in the access log as "uuid". Deferred (>) so the
+	# response carries exactly one copy even when the app echoes it.
+	request_header X-Request-ID {http.request.uuid}
+	header >X-Request-ID {http.request.uuid}
+
+	encode zstd gzip
+
+	header {
+		# HSTS is ignored by browsers over plain http, so it is safe in local mode.
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		# frame-ancestors only: a full CSP would have to cover the Circle SDK
+		# (/vendor) and its iframes plus YouTube/Vimeo/Hudl embeds; add one
+		# after auditing those.
+		Content-Security-Policy "frame-ancestors 'self'"
+		X-Frame-Options "SAMEORIGIN"
+		# Check-in needs geolocation; nothing uses camera or microphone.
+		Permissions-Policy "geolocation=(self), camera=(), microphone=(), payment=()"
+		-Server
+	}
+
+	reverse_proxy {$APP_UPSTREAMS} {
+		lb_policy round_robin
+		# A request that cannot reach one container (restarting, stopped)
+		# is retried on another for up to 10s. GETs are also retried when
+		# the connection drops mid-request.
+		lb_try_duration 10s
+		lb_try_interval 250ms
+
+		health_uri {$HEALTH_PATH}
+		health_interval 3s
+		health_timeout 2s
+		health_status 200
+		health_fails 1
+		health_passes 1
+
+		fail_duration 10s
+		max_fails 1
+		unhealthy_status 502 503 504
+
+		header_up X-Request-ID {http.request.uuid}
+		# Exactly one address: the client as Caddy resolved it. The app takes
+		# the last X-Forwarded-For hop as the client IP (rate limits).
+		header_up X-Forwarded-For {client_ip}
+		# Which container answered; useful when debugging the pool.
+		header_down X-Served-By {http.reverse_proxy.upstream.hostport}
+	}
+
+	log_append upstream {http.reverse_proxy.upstream.hostport}
+}

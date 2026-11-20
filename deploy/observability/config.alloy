@@ -1,0 +1,146 @@
+// Grafana Alloy: the one collector for the stack.
+//
+//   logs     every container of this compose project, via the Docker socket,
+//            to Loki with labels service, container and level
+//   metrics  host disk/memory/CPU (node exporter) and Caddy's metrics
+//            (requests, latency, upstream health), remote-written to Prometheus
+//
+// Container lifecycle (restarts, OOM kills, failing health checks) comes from
+// the `events` service, which prints `docker events` as JSON lines; they
+// arrive here like any other container log (service="events"). cAdvisor is
+// not used: it cannot read containers on Docker's containerd image store.
+//
+// App logs (api/ops/log.ts): in production one JSON object per line on stdout
+// with ts, level (debug|info|warn|error), msg, source (server | client |
+// job:<name>), and, depending on the line, reqId, userId, route, module,
+// kind ("access" on the one line per request), method, status, ms, err and
+// failedReqId. Only `level` and `source` become labels; everything else is
+// high-cardinality and is parsed with `| json` at query time.
+// App stderr and any non-JSON line are plain text, graded by keyword.
+// Caddy's access log (stdout) and its own log (stderr) are JSON as well.
+
+// ── logs ────────────────────────────────────────────────────────────────
+
+discovery.docker "project" {
+  host             = "unix:///var/run/docker.sock"
+  // Short, so a container that crashes seconds after starting is still read.
+  refresh_interval = "5s"
+  filter {
+    name   = "label"
+    values = ["com.docker.compose.project=" + sys.env("COMPOSE_PROJECT")]
+  }
+}
+
+discovery.relabel "project" {
+  targets = discovery.docker.project.targets
+
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_service"]
+    target_label  = "service"
+  }
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex         = "/(.*)"
+    target_label  = "container"
+  }
+  rule {
+    source_labels = ["__meta_docker_container_log_stream"]
+    target_label  = "stream"
+  }
+}
+
+loki.source.docker "project" {
+  host             = "unix:///var/run/docker.sock"
+  targets          = discovery.relabel.project.output
+  relabel_rules    = discovery.relabel.project.rules
+  forward_to       = [loki.process.level.receiver]
+  refresh_interval = "10s"
+}
+
+loki.process "level" {
+  forward_to = [loki.write.local.receiver]
+
+  // App JSON on stdout: level and source from the line.
+  stage.match {
+    selector = `{service=~"app[0-9]+", stream="stdout"} |~ "^\\s*\\{"`
+    stage.json {
+      expressions = { level = "level", source = "source" }
+    }
+    stage.labels {
+      values = { source = "" }
+    }
+  }
+
+  // Other JSON (Caddy, Grafana's logfmt excepted): level only.
+  stage.match {
+    selector = `{service!~"app[0-9]+"} |~ "^\\s*\\{"`
+    stage.json {
+      expressions = { level = "level" }
+    }
+  }
+
+  // Plain text: app stderr (e.g. a crash trace) and every non-JSON line
+  // (Postgres, the backup job, an app in pretty mode). Graded by keyword.
+  stage.match {
+    selector = `{service=~"app[0-9]+", stream="stderr"}`
+    stage.regex {
+      expression = "(?i)(?P<level>\\b(?:error|fatal|panic|unhandled|warn|warning)\\b)"
+    }
+  }
+  stage.match {
+    selector = `{service=~".+"} !~ "^\\s*\\{"`
+    stage.regex {
+      expression = "(?i)(?P<level>\\b(?:error|fatal|panic|unhandled|warn|warning)\\b)"
+    }
+  }
+
+  // Normalise: error | warn | info | debug (pino-style numbers included).
+  stage.template {
+    source   = "level"
+    template = "{{ $v := ToLower .Value }}{{ if or (eq $v \"error\") (eq $v \"fatal\") (eq $v \"panic\") (eq $v \"unhandled\") (eq $v \"50\") (eq $v \"60\") }}error{{ else if or (eq $v \"warn\") (eq $v \"warning\") (eq $v \"40\") }}warn{{ else if or (eq $v \"debug\") (eq $v \"20\") }}debug{{ else }}info{{ end }}"
+  }
+
+  stage.labels {
+    values = { level = "" }
+  }
+}
+
+loki.write "local" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}
+
+// ── metrics ─────────────────────────────────────────────────────────────
+
+prometheus.exporter.unix "host" {
+  rootfs_path     = "/rootfs"
+  sysfs_path      = "/sys"
+  procfs_path     = "/host/proc"
+  set_collectors  = ["filesystem", "meminfo", "loadavg", "cpu"]
+
+  filesystem {
+    fs_types_exclude     = "^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs|tmpfs)$"
+    mount_points_exclude = "^/(dev|proc|run|sys|var/lib/docker/.+)($|/)"
+  }
+}
+
+prometheus.scrape "host" {
+  targets         = prometheus.exporter.unix.host.targets
+  forward_to      = [prometheus.remote_write.local.receiver]
+  scrape_interval = "30s"
+  job_name        = "host"
+}
+
+prometheus.scrape "caddy" {
+  targets         = [{"__address__" = "caddy:9180"}]
+  forward_to      = [prometheus.remote_write.local.receiver]
+  scrape_interval = "15s"
+  job_name        = "caddy"
+}
+
+prometheus.remote_write "local" {
+  endpoint {
+    url = "http://prometheus:9090/api/v1/write"
+  }
+}

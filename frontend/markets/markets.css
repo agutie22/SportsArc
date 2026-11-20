@@ -1,0 +1,561 @@
+/* Pro markets (markets/index.js). Tokens only, from styles.css.
+   The two sides of a market use --side-a and --side-b; a third (a draw)
+   uses --gold. */
+
+/* ── the scoreboard strip ── */
+.mk-strip {
+  display: flex; align-items: stretch; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden;
+}
+.mk-strip-label {
+  flex: none; display: flex; flex-direction: column; justify-content: center; gap: 2px;
+  padding: 10px 16px; border-right: 1px solid var(--border);
+}
+.mk-strip-league { font-family: var(--font-head); font-size: 18px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; white-space: nowrap; }
+.mk-strip-sub { font-size: 11px; color: var(--text-dim); }
+.mk-strip-tiles { display: flex; overflow-x: auto; scrollbar-width: thin; flex: 1; min-width: 0; }
+.mk-tile {
+  flex: none; width: 168px; display: flex; flex-direction: column; gap: 5px; padding: 10px 14px;
+  background: none; border: none; border-right: 1px solid var(--border); color: var(--text);
+  text-align: left; cursor: pointer; font: inherit; min-height: 44px;
+}
+.mk-tile:hover { background: var(--bg-surface); }
+.mk-tile-kicker { display: flex; align-items: baseline; gap: 4px; min-width: 0; }
+.mk-tile-kicker .mk-tile-league { min-width: 0; flex: 1 1 auto; }
+.mk-tile-kicker .mk-tile-when { flex: none; margin-left: auto; }
+.mk-tile-when { font-size: 11.5px; color: var(--text-dim); }
+.mk-tile-league { font-size: 11px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-tile-row { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mk-a-ink { color: var(--side-a); }
+.mk-b-ink { color: var(--side-b); }
+.mk-live { color: var(--rose); font-weight: 700; }
+
+/* ── cards ── */
+.mk-card {
+  display: flex; flex-direction: column; gap: 10px; padding: 16px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.mk-meta { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-muted); }
+.mk-title { font-size: 16px; font-weight: 700; line-height: 1.25; }
+.mk-chance { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.mk-chance-num { font-family: var(--font-head); font-size: 32px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.mk-chance-text { font-size: 13px; color: var(--text-muted); }
+/* Odds over time (odds.js): the favorite's chance over 24 hours, a step line. */
+.mk-odds { display: flex; align-items: center; gap: 8px; color: var(--text-dim); }
+.mk-odds svg { flex: 1; min-width: 0; height: 28px; }
+.mk-odds-up { color: var(--emerald); }
+.mk-odds-down { color: var(--rose); }
+.mk-odds-text { flex: none; font-size: 12px; font-variant-numeric: tabular-nums; }
+.mk-prices { display: flex; gap: 8px; }
+.mk-price {
+  flex: 1; min-width: 0; min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 0 12px; border-radius: var(--radius-sm); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+  background: var(--bg-surface); border: 1px solid var(--border); color: var(--text);
+  transition: border-color .2s var(--ease), background .2s var(--ease);
+}
+.mk-price:disabled { opacity: .45; cursor: default; }
+.mk-price-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-price-cents { font-variant-numeric: tabular-nums; }
+.mk-price.mk-a .mk-price-cents { color: var(--side-a); }
+.mk-price.mk-b .mk-price-cents { color: var(--side-b); }
+.mk-price.mk-c .mk-price-cents { color: var(--gold); }
+.mk-price.mk-a:hover:not(:disabled) { border-color: var(--side-a); background: var(--side-a-dim); }
+.mk-price.mk-b:hover:not(:disabled) { border-color: var(--side-b); background: var(--side-b-dim); }
+.mk-price.mk-c:hover:not(:disabled) { border-color: var(--gold); background: var(--gold-dim); }
+.mk-lines { display: flex; gap: 8px; flex-wrap: wrap; }
+.mk-line {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 12px;
+  border-radius: var(--radius-pill); border: 1px solid var(--border); background: none;
+  color: var(--text-muted); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.mk-line:hover { color: var(--text); border-color: var(--border-hover); }
+.mk-line-cents { color: var(--text); font-variant-numeric: tabular-nums; }
+.mk-foot { font-size: 12px; color: var(--text-dim); }
+
+.mk-headline .mk-title { font-size: 20px; }
+.mk-headline .mk-chance-num { font-size: 44px; }
+.mk-headline .mk-price { min-height: 52px; font-size: 15px; }
+.mk-bar { display: flex; height: 8px; border-radius: var(--radius-pill); overflow: hidden; gap: 2px; }
+.mk-bar-a { background: var(--side-a); }
+.mk-bar-b { background: var(--side-b); }
+
+/* ── the Markets tab ── */
+.mk-tab { display: flex; flex-direction: column; gap: 14px; }
+.mk-kinds { display: flex; gap: 8px; flex-wrap: wrap; }
+.mk-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.mk-skel { min-height: 160px; }
+.mk-disclaimer { font-size: 12px; color: var(--text-dim); }
+@media (max-width: 640px) { .mk-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── the rail (rail.js): the account, then open positions ── */
+.mk-rail { display: flex; flex-direction: column; gap: 16px; }
+.mk-rail-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.mk-rail-head .widget-title { margin-bottom: 0; font-size: 17px; }
+.mk-badge { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: var(--radius-pill); }
+.mk-badge-on { background: var(--emerald-dim); color: var(--emerald); }
+.mk-badge-practice { background: var(--accent-dim); color: var(--accent); }
+.mk-count {
+  min-width: 26px; padding: 3px 8px; border-radius: var(--radius-pill); text-align: center;
+  background: var(--bg-surface); color: var(--text-muted); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.mk-balance-block { display: flex; flex-direction: column; gap: 4px; }
+.mk-balance-label { font-size: 12.5px; color: var(--text-muted); }
+.mk-balance { font-family: var(--font-head); font-size: 40px; font-weight: 700; line-height: 1; letter-spacing: .3px; font-variant-numeric: tabular-nums; }
+.mk-stats {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 14px 0 0;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;
+}
+.mk-stats > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 9px 10px; }
+.mk-stats > div + div { border-left: 1px solid var(--border); }
+.mk-stats dt { font-size: 11px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--text-dim); }
+.mk-stats dd { margin: 0; font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-account-actions { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+.mk-account-actions .btn-game { flex: 1; min-height: 44px; }
+.mk-icon-btn {
+  flex: none; width: 44px; height: 44px; display: grid; place-items: center; margin-left: auto;
+  border: 1px solid var(--border); border-radius: var(--radius-pill); background: none; color: var(--text-dim); cursor: pointer;
+}
+.mk-icon-btn svg { width: 16px; height: 16px; }
+.mk-icon-btn:hover { color: var(--text); border-color: var(--border-hover); }
+.mk-account-note { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 12px; color: var(--text-dim); }
+.mk-account-note svg { flex: none; width: 13px; height: 13px; }
+.mk-wide { width: 100%; margin-top: 0; }
+.mk-connect-list { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.mk-connect-list li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start; font-size: 13.5px; color: var(--text-muted); line-height: 1.4; }
+.mk-connect-list strong { display: block; color: var(--text); font-size: 14px; }
+.mk-connect-ic svg { width: 15px; height: 15px; }
+.mk-connect-ic { width: 28px; height: 28px; display: grid; place-items: center; border-radius: var(--radius-xs); background: var(--bg-surface); color: var(--accent-ink); }
+
+.mk-pos {
+  display: flex; flex-direction: column; gap: 6px; width: calc(100% + 16px); margin: 0 -8px; padding: 12px 8px;
+  background: none; border: none; border-top: 1px solid var(--border); color: var(--text);
+  font: inherit; text-align: left; cursor: pointer;
+}
+.mk-pos:first-child { border-top: none; padding-top: 4px; }
+.mk-pos:hover { background: var(--bg-surface); border-radius: var(--radius-sm); }
+.mk-pos:hover + .mk-pos { border-top-color: transparent; }
+.mk-pos-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.mk-pos-top strong { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-side-chip { flex: none; padding: 2px 6px; border-radius: var(--radius-xs); background: var(--bg-surface); color: var(--text-muted); font-size: 10.5px; font-weight: 800; letter-spacing: .5px; }
+.mk-side-no { background: none; box-shadow: inset 0 0 0 1px var(--border-hover); }
+.mk-pos-val { margin-left: auto; flex: none; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mk-pos-sub { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--text-muted); }
+.mk-pos-sub > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-pnl { flex: none; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text-dim); }
+.mk-pnl.mk-up { color: var(--emerald); }
+.mk-pnl.mk-down { color: var(--rose); }
+.mk-meter { position: relative; height: 4px; border-radius: var(--radius-pill); background: var(--bg-surface); }
+.mk-meter-fill { position: absolute; top: 0; bottom: 0; border-radius: inherit; }
+.mk-meter.up .mk-meter-fill { background: var(--emerald); }
+.mk-meter.down .mk-meter-fill { background: var(--rose); }
+.mk-meter-paid { position: absolute; top: -3px; width: 2px; height: 10px; border-radius: 1px; background: var(--text-muted); transform: translateX(-1px); }
+.mk-meter-text { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.mk-pos-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 13.5px; font-weight: 600;
+}
+.mk-pos-foot span { font-size: 12px; font-weight: 500; color: var(--text-dim); }
+.mk-up { color: var(--emerald); }
+.mk-down { color: var(--rose); }
+
+/* ── the trade sheet ── */
+.sheet-trade .sheet-panel { max-width: 460px; }
+.tr-trade, .tr-panel { display: flex; flex-direction: column; gap: 18px; }
+.tr-panel { align-items: flex-start; }
+.tr-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.tr-chance { font-family: var(--font-head); font-size: 56px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.tr-chance-text { font-size: 14px; color: var(--text-muted); }
+.tr-sub { font-size: 12.5px; color: var(--text-dim); margin-top: -10px; }
+.tr-field { border: none; display: flex; flex-direction: column; gap: 10px; }
+.tr-legend { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
+.tr-choices { display: flex; gap: 8px; }
+.tr-choice {
+  flex: 1; min-width: 0; min-height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-surface);
+  color: var(--text); font: inherit; font-size: 16px; font-weight: 700; cursor: pointer;
+}
+.tr-choice-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 6px; }
+.tr-choice-cents { font-size: 13px; font-weight: 600; opacity: .85; font-variant-numeric: tabular-nums; }
+.tr-choice.mk-side-0.is-on { border: 2px solid var(--side-a); background: var(--side-a-dim); color: var(--side-a); }
+.tr-choice.mk-side-1.is-on { border: 2px solid var(--side-b); background: var(--side-b-dim); color: var(--side-b); }
+.tr-choice.mk-side-2.is-on { border: 2px solid var(--gold); background: var(--gold-dim); color: var(--gold); }
+.tr-amount {
+  display: flex; align-items: center; gap: 4px; font-family: var(--font-head); font-size: 44px; font-weight: 700;
+  border-bottom: 1px solid var(--border); padding-bottom: 6px;
+}
+.tr-amount input {
+  flex: 1; min-width: 0; background: none; border: none; color: var(--text); font: inherit;
+  font-variant-numeric: tabular-nums; -moz-appearance: textfield;
+}
+.tr-amount input:focus { outline: none; }
+.tr-amount:focus-within { border-bottom-color: var(--accent); }
+.tr-amount input::-webkit-outer-spin-button, .tr-amount input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.tr-chips { display: flex; gap: 8px; }
+.tr-chips .chip { flex: 1; justify-content: center; min-height: 44px; }
+.tr-quote {
+  display: flex; flex-direction: column; gap: 8px; padding: 14px; min-height: 108px;
+  background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.tr-row { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
+.tr-row span { color: var(--text-muted); }
+.tr-row strong { font-variant-numeric: tabular-nums; }
+.tr-row-win { padding-top: 8px; border-top: 1px solid var(--border); }
+.tr-row-win strong { color: var(--emerald); }
+.tr-error { font-size: 14px; color: var(--rose); }
+.tr-actions { display: flex; flex-direction: column; gap: 10px; }
+.tr-wide { width: 100%; min-height: 52px; font-size: 16px; }
+.tr-fine { font-size: 12px; color: var(--text-dim); text-align: center; line-height: 1.5; }
+.tr-icon, .tr-check {
+  width: 56px; height: 56px; border-radius: var(--radius-pill); display: grid; place-items: center;
+  background: var(--side-a-dim); color: var(--side-a);
+}
+.tr-check { background: var(--emerald-dim); color: var(--emerald); }
+.tr-icon svg, .tr-check svg { width: 26px; height: 26px; }
+.tr-h { font-family: var(--font-head); font-size: 28px; font-weight: 700; line-height: 1.1; }
+.tr-p { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+.tr-note { font-size: 13px; color: var(--text-dim); }
+.tr-terms {
+  max-height: 280px; overflow-y: auto; white-space: pre-wrap; font-size: 13px; line-height: 1.5;
+  padding: 12px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text-muted); width: 100%;
+}
+.tr-done { align-items: center; text-align: center; padding-top: 24px; }
+.tr-done-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.tr-done-actions .btn-post { min-height: 48px; }
+
+/* Phones: the strip runs edge to edge, and the rail sits above the
+   Markets view in a compact form (smaller balance, two positions, no meters). */
+@media (max-width: 900px) {
+  .games-markets-rail .mk-rail { gap: 10px; margin-bottom: 14px; }
+  .games-markets-rail .mk-account-note, .games-markets-rail .mk-pos-foot span,
+  .games-markets-rail .mk-meter, .games-markets-rail .mk-meter-text { display: none; }
+  .games-markets-rail .mk-rail-head { margin-bottom: 8px; }
+  .games-markets-rail .mk-rail-head .widget-title { font-size: 15px; }
+  .games-markets-rail .mk-balance { font-size: 28px; }
+  .games-markets-rail .mk-stats { margin-top: 10px; }
+  .games-markets-rail .mk-pos:nth-child(n + 3) { display: none; }
+  .games-markets-rail .widget { padding: 12px 14px; }
+}
+@media (max-width: 760px) {
+  .mk-strip { border-radius: 0; border-left: none; border-right: none; }
+  .mk-tile { width: 140px; }
+  .games-markets-rail .widget { border-radius: var(--radius-xl); border: 1px solid var(--border); }
+}
+
+/* ── the Markets view under ALL ── */
+.mk-all { gap: 22px; }
+.mk-all-title { font-family: var(--font-head); font-size: 22px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; }
+.mk-all-sport { display: flex; flex-direction: column; gap: 10px; }
+.mk-all-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.mk-all-name { font-size: 17px; font-weight: 800; }
+.mk-all-more { font-size: 13.5px; font-weight: 600; color: var(--accent-ink); min-height: 32px; display: inline-flex; align-items: center; }
+
+/* ── Home (home.js): Tonight on Gemini, the Markets tab ── */
+.mk-tonight .widget-body { display: flex; flex-direction: column; gap: 2px; }
+.mk-tonight-row {
+  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 8px;
+  background: none; border: none; border-radius: var(--radius-sm); color: var(--text);
+  font: inherit; text-align: left; cursor: pointer;
+}
+.mk-tonight-row:hover { background: var(--bg-surface); }
+/* The viewer's team's game (teams.js): first, in the team's accent. */
+.mk-tonight-team { background: var(--accent-dim); box-shadow: inset 3px 0 0 var(--accent); }
+.mk-tonight-team:hover { background: var(--accent-dim); }
+.mk-tonight-tag { font-size: 10.5px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase; color: var(--accent-ink); }
+.mk-tonight-when { flex: none; width: 52px; font-size: 11.5px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.mk-tonight-when.mk-live { font-size: 11px; font-weight: 800; letter-spacing: .3px; }
+.mk-tonight-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.mk-tonight-line { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mk-tonight-line strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-vs { color: var(--text-dim); font-weight: 500; }
+.mk-bar-thin { height: 4px; }
+.mk-tonight-foot {
+  display: flex; justify-content: space-between; gap: 10px; margin-top: 6px; padding-top: 10px;
+  border-top: 1px solid var(--border); font-size: 13.5px; font-weight: 600;
+}
+
+.mk-home { display: flex; flex-direction: column; gap: 14px; }
+.mk-home-bar { display: none; }
+.mk-home-views {
+  display: inline-flex; align-self: flex-start; gap: 4px; padding: 4px;
+  background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-pill);
+}
+.mk-home-views button {
+  min-height: 40px; padding: 0 20px; border: none; border-radius: var(--radius-pill);
+  background: none; color: var(--text-muted); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.mk-home-views button.active { background: var(--accent); color: var(--on-accent); }
+.mk-home-body, .mk-home-games, .mk-picks { display: flex; flex-direction: column; gap: 14px; }
+.mk-home-section {
+  display: flex; flex-direction: column; padding: 4px 16px 8px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.mk-home-h { font-size: 15px; font-weight: 700; margin: 10px 0 4px; }
+.mk-home-games > .mk-home-h { margin: 6px 0 -4px; }
+.mk-home-more { font-size: 14px; font-weight: 600; }
+
+.mk-friend-main, .mk-pick-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
+.mk-friend-sub, .mk-pick-sub { font-size: 12px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-result { font-weight: 700; padding: 1px 8px; border-radius: var(--radius-pill); }
+.mk-result-won { background: var(--emerald-dim); color: var(--emerald); }
+.mk-result-lost { background: var(--bg-surface); color: var(--text-muted); }
+
+@media (max-width: 900px) {
+  /* The rail is hidden here, so the account comes back as one bar on the tab. */
+  .mk-home-bar:not(:empty) { display: block; }
+}
+
+/* ── Your picks: the summary (record, net, net over time, last 10) ── */
+.mk-sum {
+  display: flex; flex-direction: column; gap: 14px; padding: 16px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.mk-sum-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.mk-sum-fig { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.mk-sum-fig + .mk-sum-fig { align-items: flex-end; text-align: right; }
+.mk-sum-num { font-family: var(--font-head); font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.mk-sum-lbl { font-size: 11px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; color: var(--text-dim); }
+.mk-sum-line { display: block; width: 100%; height: auto; overflow: visible; }
+.mk-sum-line.up { color: var(--emerald); }
+.mk-sum-line.down { color: var(--rose); }
+.mk-sum-zero { fill: none; stroke: var(--border-hover); stroke-width: 1; stroke-dasharray: 3 4; }
+.mk-sum-area { fill: currentColor; opacity: .12; }
+.mk-sum-stroke { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.mk-sum-end { fill: currentColor; stroke: var(--bg-card); stroke-width: 2; }
+.mk-stats.mk-stats-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; }
+.mk-form { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--text-dim); }
+.mk-form-dots { display: flex; gap: 5px; }
+/* Won is filled, lost is a ring: the two read apart without color. */
+.mk-form-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--emerald); }
+.mk-form-dot.lost { background: none; box-shadow: inset 0 0 0 2px var(--rose); }
+@media (max-width: 480px) {
+  .mk-sum-num { font-size: 38px; }
+  .mk-stats.mk-stats-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mk-stats-4 > div:nth-child(3) { border-left: none; }
+  .mk-stats-4 > div:nth-child(n + 3) { border-top: 1px solid var(--border); }
+}
+
+/* ── section heads with a count ── */
+.mk-sec-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 12px 0 4px; }
+.mk-sec-head .mk-home-h { margin: 0; }
+.mk-sec-note { margin-left: auto; font-size: 12px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+
+/* ── an open pick ── */
+.mk-op {
+  display: flex; flex-direction: column; gap: 8px; width: calc(100% + 16px); margin: 0 -8px; padding: 14px 8px;
+  background: none; border: none; border-top: 1px solid var(--border); border-radius: 0;
+  color: var(--text); font: inherit; text-align: left; cursor: pointer;
+}
+.mk-sec-head + .mk-op { border-top: none; padding-top: 6px; }
+.mk-op:hover { background: var(--bg-surface); border-radius: var(--radius-sm); }
+.mk-op:hover + .mk-op { border-top-color: transparent; }
+.mk-op-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.mk-op-side { font-size: 16px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-op-when { flex: none; margin-left: auto; font-size: 12px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.mk-op-when.mk-live { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: .4px; }
+.mk-live-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: mk-pulse 1.6s ease-in-out infinite; }
+@keyframes mk-pulse { 50% { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) { .mk-live-dot { animation: none; } }
+.mk-op-game { margin-top: -4px; font-size: 12.5px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-op-nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.mk-op-nums > span { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.mk-op-nums > span:nth-child(2) { align-items: center; }
+.mk-op-nums > span:last-child { align-items: flex-end; text-align: right; }
+.mk-op-k { font-size: 11px; color: var(--text-dim); white-space: nowrap; }
+.mk-op-nums strong { font-size: 15px; font-variant-numeric: tabular-nums; }
+
+/* ── settled picks, by day ── */
+.mk-day { margin: 14px 0 0; font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); }
+.mk-sec-head + .mk-day { margin-top: 6px; }
+.mk-st { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 0; border-top: 1px solid var(--border); }
+.mk-day + .mk-st { border-top: none; }
+.mk-st-mark { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; }
+.mk-st-mark svg { width: 14px; height: 14px; }
+.mk-st-won .mk-st-mark { background: var(--emerald-dim); color: var(--emerald); }
+.mk-st-lost .mk-st-mark { background: var(--bg-surface); color: var(--text-dim); }
+.mk-st-lost .mk-pick-main strong { color: var(--text-muted); }
+.mk-st-sold .mk-st-mark { background: var(--bg-surface); color: var(--text-muted); }
+.mk-st-money { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-variant-numeric: tabular-nums; }
+.mk-st-money strong { font-size: 14px; }
+.mk-st-money > span { font-size: 12px; color: var(--text-dim); }
+.mk-st .mk-icon-btn { margin-left: 0; }
+.mk-st-gap { flex: none; width: 44px; }
+.mk-show-more { align-self: center; margin: 8px 0 4px; }
+
+/* ── no picks yet ── */
+.mk-empty {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px 16px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.mk-empty-ic svg { width: 20px; height: 20px; }
+.mk-empty-ic { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-dim); color: var(--accent-ink); }
+.mk-empty-h { margin: 0; font-family: var(--font-head); font-size: 26px; font-weight: 700; line-height: 1.05; letter-spacing: .3px; }
+.mk-empty-p { margin: 0; max-width: 46ch; font-size: 14px; line-height: 1.5; color: var(--text-muted); }
+.mk-empty-games { display: flex; flex-direction: column; gap: 12px; width: 100%; padding-top: 12px; border-top: 1px solid var(--border); }
+.mk-empty-game { display: flex; flex-direction: column; gap: 6px; }
+.mk-empty-game-t { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--text-muted); }
+
+/* ── phones: the account bar on the Markets tab ── */
+.mk-hb2 {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; align-items: center;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text);
+}
+.mk-hb2:hover { border-color: var(--border-hover); color: var(--text); }
+.mk-hb2-cell { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 10px 12px; }
+.mk-hb2-cell + .mk-hb2-cell { border-left: 1px solid var(--border); }
+.mk-hb2-k { font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-hb2-v { font-family: var(--font-head); font-size: 22px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mk-hb2 .mk-chev { padding: 0 12px 0 4px; }
+.mk-chev { flex: none; color: var(--text-dim); font-size: 18px; line-height: 1; }
+
+/* ── a pick from someone you follow ── */
+.mk-fr { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border); }
+.mk-home-h + .mk-fr { border-top: none; }
+.mk-fr-move { font-size: 12px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.mk-fr-btn {
+  flex: none; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-surface);
+  color: var(--text-muted); font: inherit; font-size: 11px; font-weight: 600; line-height: 1.2; cursor: pointer;
+}
+.mk-fr-btn strong { font-size: 15px; color: var(--side-a); font-variant-numeric: tabular-nums; }
+.mk-fr-btn:hover:not(:disabled) { border-color: var(--side-a); background: var(--side-a-dim); color: var(--text); }
+.mk-fr-btn:disabled { opacity: .45; cursor: default; }
+.mk-fr .mk-result { flex: none; font-size: 13px; }
+
+/* ── Tonight on Gemini: your side on a game you hold ── */
+.mk-you { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.mk-you-dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-ink); }
+
+/* ══ Your picks: the rail that manages the list (picks-rail.js) ══ */
+.mk-rail-picks:empty { display: none; }
+.mk-op.is-sel { background: var(--accent-dim); border-radius: var(--radius-sm); border-top-color: transparent; }
+.mk-op.is-sel + .mk-op { border-top-color: transparent; }
+.mk-link { padding: 0; border: none; background: none; color: var(--accent-ink); font: inherit; font-weight: 600; cursor: pointer; }
+
+/* Portfolio: value, change over a range, available, in play, P&L */
+.mk-pf-value { font-family: var(--font-head); font-size: 40px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.mk-pf-change { margin-top: 4px; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.mk-pf-change span { color: var(--text-dim); font-weight: 500; }
+.mk-pf-line { display: block; width: 100%; height: auto; margin: 12px 0 8px; color: var(--emerald); }
+.mk-pf-line.down { color: var(--rose); }
+.mk-pf-line .area { fill: currentColor; opacity: .12; }
+.mk-pf-line .stroke { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.mk-pf-line .end { fill: currentColor; stroke: var(--bg-card); stroke-width: 2; }
+.mk-range { display: flex; gap: 4px; margin-bottom: 12px; }
+.mk-range button {
+  flex: 1; min-height: 32px; border: none; border-radius: var(--radius-pill); background: none;
+  color: var(--text-dim); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer;
+}
+.mk-range button[aria-pressed="true"] { background: var(--bg-surface); color: var(--text); }
+.mk-pf-actions { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+.mk-pf-actions .btn-game { flex: 1; min-height: 40px; }
+.mk-pf-actions .mk-icon-btn { margin-left: 0; }
+
+/* Needs you */
+.mk-att { display: flex; flex-direction: column; }
+.mk-att-row { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 0; border-top: 1px solid var(--border); }
+.mk-att-row:first-child { border-top: none; padding-top: 0; }
+.mk-att-ic { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; }
+.mk-att-ic svg { width: 15px; height: 15px; }
+.mk-att-won .mk-att-ic { background: var(--emerald-dim); color: var(--emerald); }
+.mk-att-lost .mk-att-ic { background: var(--bg-surface); color: var(--text-dim); }
+.mk-att-soon .mk-att-ic { background: var(--rose-dim); color: var(--rose); }
+.mk-att-move .mk-att-ic { background: var(--gold-dim); color: var(--gold); }
+.mk-att-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; font-size: 13.5px; }
+.mk-att-main strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-att-sub { font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.mk-att-go {
+  flex: none; min-height: 32px; padding: 0 12px; border-radius: var(--radius-pill); border: 1px solid var(--border-hover);
+  background: none; color: var(--text); font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer;
+}
+.mk-att-go:hover { background: var(--bg-surface); }
+.mk-att-clear { margin-top: 8px; padding: 0; border: none; background: none; color: var(--text-dim); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.mk-att-clear:hover { color: var(--text); }
+
+/* Show: Open · Settled · All, league, sort */
+.mk-ctl { display: flex; flex-direction: column; gap: 12px; }
+.mk-seg { display: flex; gap: 4px; padding: 4px; background: var(--bg-surface); border-radius: var(--radius-pill); }
+.mk-seg button {
+  flex: 1; min-height: 34px; border: none; border-radius: var(--radius-pill); background: none;
+  color: var(--text-muted); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.mk-seg button[aria-pressed="true"] { background: var(--bg-card); color: var(--text); box-shadow: var(--shadow-sm); }
+.mk-ctl-label { font-size: 11px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--text-dim); }
+.mk-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.mk-chip {
+  min-height: 32px; padding: 0 12px; border-radius: var(--radius-pill); border: 1px solid var(--border);
+  background: none; color: var(--text-muted); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
+}
+.mk-chip[aria-pressed="true"] { border-color: var(--accent-ink); color: var(--accent-ink); background: var(--accent-dim); }
+.mk-chip b { margin-left: 4px; font-variant-numeric: tabular-nums; }
+.mk-sort { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--text-muted); }
+.mk-sort select {
+  min-height: 34px; padding: 0 10px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+  background: var(--bg-surface); color: var(--text); font: inherit; font-size: 13px;
+}
+
+/* The selected pick */
+.mk-sel-empty { padding: 12px 16px; }
+.mk-sel-top { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.mk-sel-top strong { font-size: 16px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-sel-when { margin-left: auto; flex: none; font-size: 12px; color: var(--text-dim); }
+.mk-sel-when.mk-live { font-size: 11px; letter-spacing: .4px; }
+.mk-sel-x { flex: none; width: 32px; height: 32px; display: grid; place-items: center; border: none; border-radius: 50%; background: none; color: var(--text-dim); cursor: pointer; }
+.mk-sel-when + .mk-sel-x { margin-left: 0; }
+.mk-sel-top strong + .mk-sel-x { margin-left: auto; }
+.mk-sel-x:hover { background: var(--bg-surface); color: var(--text); }
+.mk-sel-x svg { width: 16px; height: 16px; }
+.mk-sel-game { font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px; }
+.mk-sel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin: 0 0 12px; }
+.mk-sel-grid div { display: flex; flex-direction: column; gap: 1px; }
+.mk-sel-grid dt { font-size: 11px; color: var(--text-dim); }
+.mk-sel-grid dd { margin: 0; font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mk-sel-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.mk-sel-actions .btn-game { min-height: 42px; }
+.mk-sel-note { margin: 8px 0 0; font-size: 11.5px; color: var(--text-dim); }
+.mk-sel-half { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.mk-sel-confirm { margin-top: 12px; padding: 12px; border-radius: var(--radius-sm); background: var(--bg-surface); }
+.mk-sel-confirm p { margin: 0; font-size: 13px; line-height: 1.45; color: var(--text-muted); }
+.mk-sel-confirm p strong { color: var(--text); }
+.mk-sel-confirm .mk-sel-actions { margin-top: 10px; }
+
+/* Where your money is */
+.mk-exp-bar { display: flex; height: 10px; gap: 2px; border-radius: var(--radius-pill); overflow: hidden; margin-bottom: 10px; }
+.mk-exp-bar span:nth-child(1), .mk-exp-legend li:nth-child(1) i { background: var(--side-a); }
+.mk-exp-bar span:nth-child(2), .mk-exp-legend li:nth-child(2) i { background: var(--side-b); }
+.mk-exp-bar span:nth-child(3), .mk-exp-legend li:nth-child(3) i { background: var(--gold); }
+.mk-exp-legend { display: flex; flex-direction: column; gap: 6px; margin: 0 0 12px; padding: 0; list-style: none; font-size: 13px; }
+.mk-exp-legend li { display: flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
+.mk-exp-legend i { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.mk-exp-legend span { color: var(--text-muted); }
+.mk-exp-legend b { margin-left: auto; }
+.mk-case { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; }
+.mk-case > div { padding: 10px; border-radius: var(--radius-sm); background: var(--bg-surface); display: flex; flex-direction: column; gap: 2px; }
+.mk-case dt { font-size: 11px; color: var(--text-dim); }
+.mk-case dd { margin: 0; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Activity */
+.mk-act { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
+.mk-act li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 9px 0; border-top: 1px solid var(--border); font-size: 13px; }
+.mk-act li:first-child { border-top: none; padding-top: 0; }
+.mk-act-what { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-act-amt { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.mk-act-sub { grid-column: 1 / -1; font-size: 11.5px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-act-more { margin-top: 6px; padding: 0; border: none; background: none; color: var(--accent-ink); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.mk-act-sheet li { padding: 12px 0; }
+
+/* Phones: Needs you as chips and the switch, above the list (the rail is hidden under 900px) */
+.mk-phone-tools { display: none; flex-direction: column; gap: 10px; }
+@media (max-width: 900px) { .mk-phone-tools { display: flex; } }
+.mk-att-strip { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.mk-att-strip::-webkit-scrollbar { display: none; }
+.mk-att-chip {
+  flex: none; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px 0 6px;
+  border-radius: var(--radius-pill); border: 1px solid var(--border); background: var(--bg-card);
+  color: var(--text); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+.mk-att-chip .mk-att-ic { width: 30px; height: 30px; }
+.mk-rail[hidden], .mk-rail-games[hidden] { display: none; }
+/* A four-digit balance fits: Available gets the widest column. */
+.mk-pf .mk-stats { grid-template-columns: 1.4fr 1fr 1fr; }
+.mk-pf .mk-stats dd { font-size: 14px; }

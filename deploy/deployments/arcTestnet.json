@@ -1,0 +1,21 @@
+{
+  "chain": "arcTestnet",
+  "chainId": 5042002,
+  "contracts": {
+    "RecordAnchor": {
+      "address": "0x869517905f662957da7d59e696fdc613e09798cd",
+      "tx": "0x589b3d5e74a1ea18496dd412ea81902741ca6005330cb77a89684b9c45d95a01",
+      "commit": "ba52d88e16eee210812d502d21700b0c9489b096",
+      "uncommittedSource": false,
+      "deployedAt": "2026-11-19T21:18:34Z"
+    },
+    "EventVault": {
+      "address": "0x6748b294f0378a9d197138c452e4285195ca4204",
+      "tx": "0x947d282afbae466f8b12684ecb9ae7a892e6cfcf3608e72fb8990368226b53b4",
+      "commit": "b4d277c93d03d5ab81b9ca0d325a1619182087ed",
+      "uncommittedSource": false,
+      "deployedAt": "2026-11-19T02:40:57Z"
+    }
+  },
+  "explorer": "https://explorer.testnet.arc.io"
+}
