@@ -1,0 +1,17 @@
+# Postgres for when a VPN (Cisco AnyConnect) is up. AnyConnect routes the
+# Docker bridge subnets into its tunnel, so the host cannot reach a published
+# container port (127.0.0.1:5435 accepts, then never answers). This runs the
+# same container and data volume on the host's network instead, listening on
+# 127.0.0.1:5435 only, so DATABASE_URL in .env stays as it is.
+#
+#   docker compose -f compose.yml -f compose.vpn.yml up -d postgres
+#
+# Back to normal: docker compose up -d --force-recreate postgres
+
+services:
+  postgres:
+    network_mode: host
+    ports: !reset []
+    command: ["postgres", "-c", "listen_addresses=127.0.0.1", "-c", "port=5435"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p 5435 -U ${POSTGRES_USER:-sportsarc} -d ${POSTGRES_DB:-sportsarc}"]

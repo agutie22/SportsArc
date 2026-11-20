@@ -33,7 +33,11 @@ A disposable demo seed:
 node --env-file=.env --import=tsx scripts/seed.ts --me you@example.com
 ```
 
+The Spurs case study is `scripts/seed-spurs.ts`. Its header says what it creates. With `TESTNET_PRIVATE_KEY` and `RECORD_CONTRACT_ADDRESS` set, a running server writes those games to Arc, so read the header before running it.
+
 `TESTNET_PRIVATE_KEY` is optional and must be a throwaway testnet key. With `RECORD_CONTRACT_ADDRESS` set to SportsArcRecord, the server writes a record to Arc after check-in closes.
+
+If a VPN captures Docker's bridge network, start Postgres with `docker compose -f compose.yml -f compose.vpn.yml up -d postgres`.
 
 ## Checks
 

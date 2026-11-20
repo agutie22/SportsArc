@@ -15,6 +15,13 @@
       "commit": "b4d277c93d03d5ab81b9ca0d325a1619182087ed",
       "uncommittedSource": false,
       "deployedAt": "2026-11-19T02:40:57Z"
+    },
+    "SportsArcRecord": {
+      "address": "0xb723f5461493942fa2f1dea7ebb5b0d9015b71df",
+      "tx": "0xef4d4e85b8d43948f3e35ef6ac749a7f625c51566455a4280d3bf72579046588",
+      "commit": "78d34dad49409f4984a9313087c18a13b7333027",
+      "uncommittedSource": false,
+      "deployedAt": "2026-11-20T17:09:19Z"
     }
   },
   "explorer": "https://explorer.testnet.arc.io"

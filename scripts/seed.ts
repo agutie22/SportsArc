@@ -57,9 +57,9 @@ export const DEMO_DOMAIN = "demo.sportsarc.test";
 /** How seeds before Nov 2026 tagged game notes; reset still finds those. */
 export const DEMO_TAG = "[DEMO:";
 const TZ = "America/Chicago";
-const MIN = 60_000;
-const HOUR = 60 * MIN;
-const DAY = 24 * HOUR;
+export const MIN = 60_000;
+export const HOUR = 60 * MIN;
+export const DAY = 24 * HOUR;
 
 // ── arguments and the production guard ────────────────────────────────
 
@@ -100,12 +100,12 @@ function dbLabel(): string {
 
 // ── content: venues and people ────────────────────────────────────────
 
-type VenueKey = "givens" | "arc" | "gregory" | "healy" | "star" | "zilker" | "zilkersand" | "dovesprings" | "southaustin" | "olmos" | "montopolis";
+export type VenueKey = "givens" | "arc" | "gregory" | "healy" | "star" | "zilker" | "zilkersand" | "dovesprings" | "southaustin" | "olmos" | "montopolis";
 
-interface VenueSeed { name: string; address: string; city: string; lat: number; lng: number; kind: string; indoor?: boolean }
+export interface VenueSeed { name: string; address: string; city: string; lat: number; lng: number; kind: string; indoor?: boolean }
 
 /** Public places; coordinates are the courts or fields themselves, to within ~100 m. */
-const VENUES: Record<VenueKey, VenueSeed> = {
+export const VENUES: Record<VenueKey, VenueSeed> = {
   // Austin
   givens: { name: "Givens District Park Basketball Courts", address: "3811 E 12th St, Austin, TX 78721", city: "Austin, TX", lat: 30.2746, lng: -97.6904, kind: "court" },
   arc: { name: "Austin Recreation Center", address: "1301 Shoal Creek Blvd, Austin, TX 78701", city: "Austin, TX", lat: 30.2782, lng: -97.7490, kind: "gym", indoor: true },
@@ -181,16 +181,16 @@ const emailOf = (key: string) => `${key}@${DEMO_DOMAIN}`;
 
 // ── plumbing ──────────────────────────────────────────────────────────
 
-type Fork = () => EntityManager;
-type Who = string; // a PEOPLE key, or "ME"
+export type Fork = () => EntityManager;
+export type Who = string; // a PEOPLE key, or "ME"
 
-interface Ctx {
+export interface Ctx {
   fork: Fork;
   ids: Map<string, string>; // key -> user id; "ME" -> the owner or riley
   meIsOwner: boolean;
 }
 
-function must<T extends { ok: boolean }>(r: T, what: string): Extract<T, { ok: true }> {
+export function must<T extends { ok: boolean }>(r: T, what: string): Extract<T, { ok: true }> {
   if (!r.ok) {
     const e = (r as { error?: { code: string; message: string } }).error;
     throw new Error(`${what} failed: ${e?.code} ${e?.message}`);
@@ -199,28 +199,28 @@ function must<T extends { ok: boolean }>(r: T, what: string): Extract<T, { ok: t
 }
 
 /** Drop undefined keys: the profile patch treats a present key as "set this". */
-function defined<T extends Record<string, unknown>>(o: T): Partial<T> {
+export function defined<T extends Record<string, unknown>>(o: T): Partial<T> {
   return Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as Partial<T>;
 }
 
-async function userOf(em: EntityManager, ctx: Ctx, who: Who): Promise<User> {
+export async function userOf(em: EntityManager, ctx: Ctx, who: Who): Promise<User> {
   const id = ctx.ids.get(who);
   if (!id) throw new Error(`unknown person ${who}`);
   return em.findOneOrFail(User, { id });
 }
 
-async function gameOf(em: EntityManager, id: string) {
+export async function gameOf(em: EntityManager, id: string) {
   const g = await findGame(em, id);
   if (!g) throw new Error(`game ${id} vanished`);
   return g;
 }
 
-async function sql(ctx: Ctx, q: string, params: unknown[] = []) {
+export async function sql(ctx: Ctx, q: string, params: unknown[] = []) {
   return ctx.fork().getConnection().execute(q, params);
 }
 
 /** Move every timestamp of one game by `ms` (negative: into the past). */
-async function shiftGame(ctx: Ctx, gameId: string, ms: number): Promise<void> {
+export async function shiftGame(ctx: Ctx, gameId: string, ms: number): Promise<void> {
   const d = `(? * interval '1 millisecond')`;
   const s = [ms, gameId];
   await sql(ctx, `update games set starts_at = starts_at + ${d}, created_at = created_at + ${d} where id = ?`, [ms, ms, gameId]);
@@ -231,7 +231,7 @@ async function shiftGame(ctx: Ctx, gameId: string, ms: number): Promise<void> {
 }
 
 /** Move only when the result was recorded (and first recorded) by `ms`. */
-async function shiftRecorded(ctx: Ctx, gameId: string, ms: number): Promise<void> {
+export async function shiftRecorded(ctx: Ctx, gameId: string, ms: number): Promise<void> {
   const d = `(? * interval '1 millisecond')`;
   await sql(ctx, `update game_results set recorded_at = recorded_at + ${d}, first_recorded_at = first_recorded_at + ${d} where game_id = ?`, [ms, ms, gameId]);
   await sql(ctx, `update notifications set created_at = created_at + ${d} where game_id = ? and kind = 'result_settled'`, [ms, gameId]);
@@ -242,11 +242,11 @@ async function startsAtOf(ctx: Ctx, gameId: string): Promise<number> {
   return new Date(rows[0].starts_at).getTime();
 }
 
-async function moveStartTo(ctx: Ctx, gameId: string, at: number): Promise<void> {
+export async function moveStartTo(ctx: Ctx, gameId: string, at: number): Promise<void> {
   await shiftGame(ctx, gameId, at - (await startsAtOf(ctx, gameId)));
 }
 
-function austinParts(ms: number) {
+export function austinParts(ms: number) {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", weekday: "short", hourCycle: "h23",
   }).formatToParts(new Date(ms));
@@ -255,14 +255,14 @@ function austinParts(ms: number) {
 }
 
 /** The Austin day `ms` falls on, at hh:mm Austin time. */
-function atAustin(ms: number, hour: number, minute = 0): number {
+export function atAustin(ms: number, hour: number, minute = 0): number {
   const p = austinParts(ms);
   const offset = Date.UTC(p.y, p.m - 1, p.d, p.h, p.min) - (ms - (ms % MIN));
   return Date.UTC(p.y, p.m - 1, p.d, hour, minute) - offset;
 }
 
 /** When people play: weekend mornings, weekday evenings. */
-function playHour(ms: number, i: number): [number, number] {
+export function playHour(ms: number, i: number): [number, number] {
   const weekend = ["Sat", "Sun"].includes(austinParts(ms).weekday);
   const slots: [number, number][] = weekend ? [[8, 0], [9, 30], [10, 0], [16, 0]] : [[18, 0], [18, 30], [19, 0], [19, 30]];
   return slots[i % slots.length];
@@ -307,7 +307,7 @@ async function newGame(ctx: Ctx, venues: Map<VenueKey, string>, g: NewGame): Pro
   return r.game.id;
 }
 
-async function join(ctx: Ctx, gameId: string, who: Who[], expect: "joined" | "waitlist" = "joined") {
+export async function join(ctx: Ctx, gameId: string, who: Who[], expect: "joined" | "waitlist" = "joined") {
   for (const w of who) {
     const em = ctx.fork();
     const r = must(await joinGame(em, await gameOf(em, gameId), await userOf(em, ctx, w)), `join ${w}`);
@@ -316,11 +316,11 @@ async function join(ctx: Ctx, gameId: string, who: Who[], expect: "joined" | "wa
 }
 
 /** Put the start 30 minutes out, so check-in is open right now. */
-async function openCheckIn(ctx: Ctx, gameId: string, inMin = 30) {
+export async function openCheckIn(ctx: Ctx, gameId: string, inMin = 30) {
   await moveStartTo(ctx, gameId, Date.now() + inMin * MIN);
 }
 
-async function checkIn(ctx: Ctx, gameId: string, who: Who[]) {
+export async function checkIn(ctx: Ctx, gameId: string, who: Who[]) {
   for (const w of who) {
     const em = ctx.fork();
     const game = await gameOf(em, gameId);
@@ -329,7 +329,7 @@ async function checkIn(ctx: Ctx, gameId: string, who: Who[]) {
 }
 
 /** The host puts each player on their side. */
-async function sides(ctx: Ctx, gameId: string, host: Who, side0: Who[], side1: Who[]) {
+export async function sides(ctx: Ctx, gameId: string, host: Who, side0: Who[], side1: Who[]) {
   for (const [side, who] of [[0, side0], [1, side1]] as const) {
     for (const w of who) {
       const em = ctx.fork();
@@ -338,12 +338,12 @@ async function sides(ctx: Ctx, gameId: string, host: Who, side0: Who[], side1: W
   }
 }
 
-async function start(ctx: Ctx, gameId: string, who: Who) {
+export async function start(ctx: Ctx, gameId: string, who: Who) {
   const em = ctx.fork();
   must(await startGame(em, await gameOf(em, gameId), await userOf(em, ctx, who)), `start by ${who}`);
 }
 
-async function record(ctx: Ctx, gameId: string, who: Who, body: { outcome: string; winningSide?: number; score?: [number, number] }) {
+export async function record(ctx: Ctx, gameId: string, who: Who, body: { outcome: string; winningSide?: number; score?: [number, number] }) {
   const em = ctx.fork();
   must(await recordResult(em, await gameOf(em, gameId), await userOf(em, ctx, who), body), `record by ${who}`);
 }
@@ -411,7 +411,7 @@ export async function resetDemo(fork: Fork): Promise<Record<string, number>> {
 
 // ── seed ──────────────────────────────────────────────────────────────
 
-async function createAccount(em: EntityManager, email: string): Promise<User> {
+export async function createAccount(em: EntityManager, email: string): Promise<User> {
   const user = new User();
   const ident = new UserIdentifier();
   ident.user = user;

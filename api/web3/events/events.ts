@@ -17,8 +17,8 @@
  *
  * EventVault calls the host the `organizer` and whoever funds a prize its
  * `sponsor`; those names stay where the contract's own fields are meant.
- * Sponsors as their own accounts (brands, organizations) do not exist yet:
- * only the host funds a prize.
+ * A prize is funded by the host or by a sponsor account (a verified
+ * organization backing the event's league season or court, startPrize).
  *
  * What the server decides, and signs for the vault: who may enter (adults
  * and guardians, while there is room: the EntryPermit), which prize split an
