@@ -2,9 +2,6 @@
 #   app        pnpm install (frozen lockfile), pnpm verify, pnpm test,
 #              pnpm check:vectors (EIP-712 vectors shared with the contract tests)
 #   contracts  forge test (forge-std and OpenZeppelin are git submodules)
-#   deploy-kit shell syntax + shellcheck, compose config, Caddyfile
-#   image      docker build of the app image (not pushed; deploy.yml pushes)
-# deploy.yml runs after this workflow succeeds on a push to main.
 name: CI
 
 on:
@@ -52,47 +49,3 @@ jobs:
         run: |
           forge --version
           forge test
-
-  deploy-kit:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - name: bash -n and shellcheck
-        run: |
-          scripts=(deploy/deploy.sh deploy/local.sh deploy/bootstrap-vps.sh deploy/backup/backup.sh deploy/backup/s3-sync.sh deploy/observability/grafana/start.sh)
-          for f in "${scripts[@]}"; do bash -n "$f"; done
-          shellcheck --version | head -2
-          shellcheck -S warning "${scripts[@]}"
-      - name: compose config (every profile)
-        run: |
-          cp deploy/.env.beta.example deploy/.env
-          sed -i -e 's/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=ci/' -e 's/^GRAFANA_ADMIN_PASSWORD=.*/GRAFANA_ADMIN_PASSWORD=ci/' deploy/.env
-          docker compose --project-directory deploy --profile '*' config --quiet
-      - name: Caddyfile
-        run: |
-          docker run --rm -e SITE_ADDRESS=beta.example.com -e CADDY_GLOBAL_OPTIONS= \
-            -e 'APP_UPSTREAMS=app1:3000 app2:3000' -e HEALTH_PATH=/health/ready \
-            -v "$PWD/deploy/Caddyfile:/etc/caddy/Caddyfile:ro" caddy:2.11 \
-            caddy validate --config /etc/caddy/Caddyfile
-
-  image:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: false
-          load: true
-          tags: sportsarc:ci
-          build-args: GIT_SHA=${{ github.sha }}
-          cache-from: type=gha,scope=app
-          cache-to: type=gha,scope=app,mode=max
-      - name: image runs as non-root and loads tsx
-        run: |
-          docker image ls sportsarc:ci
-          test "$(docker run --rm sportsarc:ci id -u)" != 0
-          docker run --rm sportsarc:ci node -e "import('tsx').then(()=>console.log('tsx ok'))"

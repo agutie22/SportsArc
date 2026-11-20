@@ -611,7 +611,7 @@ export async function listUserGames(em: EntityManager, userId: string, viewer?: 
   return toPublicGames(em, games, viewer?.id);
 }
 
-/** Imported stat lines this person has claimed. Unverified — see CLAUDE.md. */
+/** Imported stat lines this person has claimed. Claiming is unverified. */
 export async function listUserRecords(em: EntityManager, userId: string) {
   const records = await em.find(
     AthleteRecord,

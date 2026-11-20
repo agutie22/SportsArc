@@ -1,5 +1,0 @@
-# Prometheus only stores what Alloy remote-writes (host disk, container
-# metrics, Caddy). It scrapes nothing itself. Retention: 15 days or 1 GB.
-global:
-  scrape_interval: 30s
-  evaluation_interval: 30s

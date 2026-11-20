@@ -1,8 +1,0 @@
-# Local runtime files of the beta stack; never commit them.
-.env
-.env.*
-!.env.beta.example
-backups/
-release.env
-compose.override.yml
-*.log
